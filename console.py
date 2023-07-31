@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         dictionary = {}
-        for parametros in range(1,len(argumentos)):
+        for parametros in range(1, len(argumentos)):
             b = argumentos[parametros].split('=')
             a = b[1].replace('_', ' ')
             c = eval(a)
@@ -137,7 +137,6 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
         print(new_instance.id)
         storage.save()
-
 
     def help_create(self):
         """ Help information for the create method """
