@@ -1,31 +1,75 @@
 #!/usr/bin/python3
-""" It’s time to change your storage engine and use SQLAlchemy """
+""" It's time to change your storage engine and use SQLAlchemy """
+import models
+from models.base_model import BaseModel, Base
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import os
+from sqlalchemy.orm import sessionmaker, scoped_session
+from os import getenv
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session
-
+import sqlalchemy
+import MySQLdb
 Base = declarative_base()
+
+
 class DBStorage:
     """This class will be the New engine"""
     __engine = None
     __session = None
+
     def __init__(self):
         """The first function when creating the class"""
-        self.__engine = create_engine(f'mysql+mysqldb://{os.getenv["HBNB_MYSQL_USER"]}:{os.getenv["HBNB_MYSQL_PWD"]}@{os.getenv["HBNB_MYSQL_HOST"]}:3306/{os.getenv["HBNB_MYSQL_DB"]}', pool_pre_ping=True)
-        if os.getenv['HBNB_ENV'] == 'test':
-            Meta = Base.MetaData(self.__engine)
-            Meta.drop_all()
-    def save(self):
-        """"""
-#    def all(self, cls=None):
+        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
+        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
+        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
+        HBNB_ENV = getenv('HBNB_ENV')
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(HBNB_MYSQL_USER,
+                                             HBNB_MYSQL_PWD,
+                                             HBNB_MYSQL_HOST,
+                                             HBNB_MYSQL_DB), pool_pre_ping=True)
+        if HBNB_ENV == 'test':
+            Base.metadata.drop_all(self.__engine)
 
-"""    def reload(self):
-        self.__engine = create_engine(f'mysql+mysqldb://{os.getenv["HBNB_MYSQL_USER"]}:{os.getenv["HBNB_MYSQL_PWD"]}@{os.getenv["HBNB_MYSQL_HOST"]}:3306/{os.getenv["HBNB_MYSQL_DB"]}', pool_pre_ping=True)
-        Meta = Base.MetaData(self.__engine)
-        self.__session = sessionmaker(expire_on_commit=False, bind=self.__engine)
-        scoped_session(self.__session)
-        Meta.create_all() """
-    
-        
+    def all(self, cls=None):
+
+        diccionario = {}
+        if cls is None:
+            pass
+        else:
+            objetos = self.__session.query(cls).all()
+
+        for objet in objetos:
+            key = f"{objet.__class__.__name__}.{objet.id}"
+            diccionario[key] = objet
+        return (diccionario)
+
+    def new(self, obj):
+        self.__session.add(obj)
+
+    def save(self, ):
+        """ commit all changes of the current database session"""
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        if obj is not None:
+            self.__session.delete(obj)
+
+    def reload(self):
+        """ reload """
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
+
+        classes = {
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
+        Base.metadata.create_all(self.__engine)
+        self.__session = scoped_session
+        (sessionmaker(bind=self.__engine, expire_on_commit=False))
