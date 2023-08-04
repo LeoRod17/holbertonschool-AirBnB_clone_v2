@@ -28,7 +28,6 @@ class DBStorage():
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-
         diccionario = {}
         if cls is None:
             pass
