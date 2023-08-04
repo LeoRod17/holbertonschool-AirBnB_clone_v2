@@ -6,12 +6,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 from sqlalchemy.ext.declarative import declarative_base
-import sqlalchemy
-import MySQLdb
-Base = declarative_base()
 
 
-class DBStorage:
+class DBStorage():
     """This class will be the New engine"""
     __engine = None
     __session = None
