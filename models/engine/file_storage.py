@@ -63,3 +63,6 @@ class FileStorage:
             if str(obj) in str(value):
                 del(FileStorage.__objects[key])
                 break
+
+    def close(self):
+        self.reload()
