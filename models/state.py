@@ -23,6 +23,6 @@ class State(BaseModel, Base):
                 split = x.split(".")
                 if split[0] == "City":
                     lista.append(y)
-                    filt = list(
-                        filter(lambda a: a.state_id == self.id, lista))
-                    return filt
+            filt = list(
+                filter(lambda a: a.state_id == self.id, lista))
+            return filt
