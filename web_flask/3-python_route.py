@@ -25,7 +25,7 @@ def CisF(text):
 
 @app.route("/python/")
 @app.route("/python/<text>")
-def pythonisCool(text= "is cool"):
+def pythonisCool(text="is cool"):
     "a funtion that returns HBNB"
     newTxt = text.replace("_", " ")
     return f'Python {newTxt}'
