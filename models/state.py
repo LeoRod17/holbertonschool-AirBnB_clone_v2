@@ -18,11 +18,9 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             from models import storage
+            from models import city
             lista = []
-            for x, y in storage.__objects.items():
-                split = x.split(".")
-                if split[0] == "City":
-                    lista.append(y)
-                    filt = list(
-                        filter(lambda a: a.state_id == self.id), lista)
-                    return filt
+            for x, in storage.all(city).values():
+                if x.state_id == self.id:
+                    list.append(x)
+                return lista
