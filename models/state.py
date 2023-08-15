@@ -12,15 +12,16 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        cities = relationship('City', backref='states',
-                              cascade="all, delete-orphan")
+        cities = relationship('City', backref='State',cascade="all, delete-orphan")
     else:
         @property
         def cities(self):
             from models import storage
-            from models import city
             lista = []
-            for x, in storage.all(city).values():
-                if x.state_id == self.id:
-                    list.append(x)
-                return lista
+            for x, y in storage._FileStorage__objects.items():
+                split = x.split(".")
+                if split[0] == "City":
+                    lista.append(y)
+                    filt = list(
+                        filter(lambda a: a.state_id == self.id), lista)
+                    return filt
