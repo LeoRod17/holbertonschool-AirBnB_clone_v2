@@ -23,6 +23,7 @@ def CisF(text):
     return f'C {newTxt}'
 
 
+@app.route("/python/")
 @app.route("/python/<text>")
 def pythonisCool(text= "is cool"):
     "a funtion that returns HBNB"
