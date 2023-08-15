@@ -21,10 +21,10 @@ class DBStorage():
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         self.__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.format(
-             HBNB_MYSQL_USER,
-             HBNB_MYSQL_PWD,
-             HBNB_MYSQL_HOST,
-             HBNB_MYSQL_DB), pool_pre_ping=True)
+                HBNB_MYSQL_USER,
+                HBNB_MYSQL_PWD,
+                HBNB_MYSQL_HOST,
+                HBNB_MYSQL_DB), pool_pre_ping=True)
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -62,10 +62,10 @@ class DBStorage():
         from models.review import Review
 
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session)
