@@ -12,7 +12,8 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        cities = relationship('City', backref='State',cascade="all, delete-orphan")
+        cities = relationship(
+            'City', backref='State', cascade="all, delete-orphan")
     else:
         @property
         def cities(self):
@@ -23,5 +24,5 @@ class State(BaseModel, Base):
                 if split[0] == "City":
                     lista.append(y)
                     filt = list(
-                        filter(lambda a: a.state_id == self.id), lista)
+                        filter(lambda a: a.state_id == self.id, lista))
                     return filt
