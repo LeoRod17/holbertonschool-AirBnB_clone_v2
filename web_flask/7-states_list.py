@@ -18,11 +18,11 @@ def Welcome():
     return "Welcome to AirBnB"
 
 
-@app.route("/states_list",strict_slashes=False)
+@app.route("/states_list", strict_slashes=False)
 def LSTC():
     """a function that returns a number"""
     dic = storage.all(State)
-    return render_template("7-states_list.html", state = dic)
+    return render_template("7-states_list.html", state=dic)
 
 
 if __name__ == '__main__':
