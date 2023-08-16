@@ -3,7 +3,7 @@
 from flask import Flask
 from flask import render_template
 from models import storage
-from models import state
+from models.state import State
 app = Flask(__name__)
 
 
@@ -11,11 +11,19 @@ app = Flask(__name__)
 def tear(r):
     storage.close()
 
-@app.route("/states_list")
-def LSTC(n):
-    """a function that returns a number"""
-    dic = storage.all(state)
-    lista = list(dic.values)
-    lista.sort()
-    render_template("7-states_list.py", lista)
 
+@app.route("/", strict_slashes=False)
+def Welcome():
+    """a function that shows a welcoming message"""
+    return "Welcome to AirBnB"
+
+
+@app.route("/states_list",strict_slashes=False)
+def LSTC():
+    """a function that returns a number"""
+    dic = storage.all(State)
+    return render_template("7-states_list.html", state = dic)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
