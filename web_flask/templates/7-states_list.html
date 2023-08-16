@@ -5,9 +5,9 @@
     </HEAD>
     <BODY>
         <H1>States</H1>
-        <UL>
-        {% for item in navigation %}
-            <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+        <UL id="lista">
+        {% for lista in lista %}
+            <li><a href="{{ lista.href }}">{{ lista.caption }}</a></li>
         {% endfor %}
         </UL>
     </BODY>
