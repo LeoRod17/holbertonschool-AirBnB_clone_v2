@@ -3,7 +3,6 @@
 from flask import Flask
 from flask import render_template
 from models import storage
-from models.city import City
 from models.state import State
 app = Flask(__name__)
 
@@ -20,8 +19,8 @@ def Welcome():
 
 
 @app.route("/cities_by_states", strict_slashes=False)
-def LC():
-    """a function that returns a number"""
+def ListaSC():
+    """a function that returns a list of States with the cities"""
     dic = storage.all(State)
     return render_template("8-cities_by_states.html", state=dic)
 
