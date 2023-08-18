@@ -7,12 +7,13 @@
         <H1>States</H1>
         <UL id="state">
             {% for x in state.values()|sort(attribute="name") %}
-                <LI>{{ x.id }}: <B>{{ x.name }}</B></LI>
-                    <UL>
-                        {% for y in state.cities|sort(attribute="name") %}
-                            <LI>{{ y.id }} {{ y.name }}</LI>
+                <LI>{{ x.id }}: <B>{{ x.name }}</B>
+                    <ul>
+                        {% for y in x.cities|sort(attribute="name") %}
+                        <li>{{ y.id }} <B>{{ y.name }}</B></li>
                         {% endfor %}
-                    </UL>
+                    </ul>
+                </LI>
             {% endfor %}
         </UL>
     </BODY>
