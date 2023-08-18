@@ -3,7 +3,6 @@
 from flask import Flask
 from flask import render_template
 from models import storage
-from models.city import City
 from models.state import State
 app = Flask(__name__)
 
@@ -30,8 +29,12 @@ def LSTC():
 def ListaSC(id):
     """a function that returns a list of States with the cities"""
     St = storage.all(State)
-    Ct = storage.all(City)
-    return render_template("9-states.html", state=St, City=Ct, Id=id)
+    stat = {}
+    for x, y in St.items():
+        spit = x.split('.')
+        if spit[1] == id:
+            stat = {x: y} 
+    return render_template("9-states.html", state=stat, Id=id)
 
 
 if __name__ == '__main__':
