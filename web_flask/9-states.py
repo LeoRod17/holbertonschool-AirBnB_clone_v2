@@ -28,13 +28,13 @@ def LSTC():
 @app.route("/states/<id>", strict_slashes=False)
 def ListaSC(id):
     """a function that returns a list of States with the cities"""
-    St = storage.all(State)
-    stat = {}
-    for x, y in St.items():
-        spit = x.split('.')
-        if spit[1] == id:
-            stat = {x: y}
-    return render_template("9-states.html", state=stat, Id=id)
+    St = storage.all(State).values()
+    ids = "Not Found"
+    for state in St:
+        if state.id == id:
+            ids = id
+            break
+    return render_template("9-states.html", state=state, Id=ids)
 
 
 if __name__ == '__main__':
