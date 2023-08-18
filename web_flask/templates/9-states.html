@@ -4,13 +4,15 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-        <H1>States:</H1>
-        <H3>Cities:</H3>
         <UL id="Cities">
             {% for x in City.values()|sort(attribute="name") %}
-            {%  if x.stateid == Id %}
+                {%  if x.stateid == Id %}
+                    {% for s in State.values() %}
+                        <H1>States: {{ s.name }}</LI>
+                    {% endfor %}
+                <H3>Cities:</H3>
                 <LI>{{ x.id }}: <B>{{ x.name }}</B></LI>
-            {%  else %}
+                {%  else %}
                 <H1>Not found</H1>
             {% endif %}
             {% endfor %}
