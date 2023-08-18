@@ -18,18 +18,20 @@ def Welcome():
     """a function that shows a welcoming message"""
     return "Welcome to AirBnB"
 
+
 @app.route("/states", strict_slashes=False)
 def LSTC():
     """a function that returns a list of States"""
     dic = storage.all(State)
     return render_template("7-states_list.html", state=dic)
 
+
 @app.route("/states/<id>", strict_slashes=False)
 def ListaSC(id):
     """a function that returns a list of States with the cities"""
     St = storage.all(State)
-    Ct = storage,all(City)
-    return render_template("9-states.html", state=St,City = Ct , ids = id)
+    Ct = storage.all(City)
+    return render_template("9-states.html", state=St, City=Ct, Id=id)
 
 
 if __name__ == '__main__':
