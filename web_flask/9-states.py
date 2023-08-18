@@ -33,7 +33,7 @@ def ListaSC(id):
     for x, y in St.items():
         spit = x.split('.')
         if spit[1] == id:
-            stat = {x: y} 
+            stat = {x: y}
     return render_template("9-states.html", state=stat, Id=id)
 
 
