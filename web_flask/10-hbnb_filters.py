@@ -3,8 +3,8 @@
 from flask import Flask
 from flask import render_template
 from models import storage
-from models.city import City
 from models.state import State
+from models.amenity import Amenity
 app = Flask(__name__)
 
 
@@ -19,17 +19,13 @@ def Welcome():
     return "Welcome to AirBnB"
 
 
-@app.route("/states")
-def ListaS():
-    """a function that returns a list of States to the template"""
-    dic = storage.all(State)
-    return render_template("7-states_list.html", state=dic)
+@app.route("/hbnb_filters", strict_slashes=False)
+def ListaSC(id):
+    """a function that returns a list of States with the cities"""
+    St = storage.all(State)
+    Am = storage.all(Amenity)
+    return render_template("10-hbnb_filters.html", state=St, Amen=Am)
 
-@app.route("/states/<id>")
-def ListaId(id):
-    """a function that returns a list of Cities with the State id to the template"""
-    dic = storage.all(City)
-    return render_template("9-states.html", City=dic, Id = id)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
